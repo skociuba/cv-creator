@@ -2,9 +2,9 @@ import React from 'react';
 
 type Props = {
   name: string;
-  value: string;
-  onchange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string;
+  value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
   type?: string;
   ariaLabel?: string;
   label?: string;
@@ -15,7 +15,7 @@ type Props = {
 const Input: React.FC<Props> = ({
   name,
   value,
-  onchange,
+  onChange,
   placeholder = 'Type here',
   type = 'text',
   label,
@@ -32,7 +32,7 @@ const Input: React.FC<Props> = ({
     <input
       id={name}
       value={value}
-      onChange={onchange}
+      onChange={onChange}
       name={name}
       type={type}
       aria-invalid={error}

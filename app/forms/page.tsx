@@ -4,17 +4,21 @@
 'use client';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
-import React from 'react';
+import React, {useState} from 'react';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
 
-import Input from '../components/ui/input';
+import Wizard from '../components/ui/wizard/Wizard';
 import {
   useAddFormMutation,
   useGetFormsQuery,
 } from '../../provider/redux/form/form';
 import {FormState} from '../../types/form';
 
+import Basic from './wizardComponents/Basic';
+import Second from './wizardComponents/Second';
+import Third from './wizardComponents/Third';
+import Last from './wizardComponents/Last';
 import {updateField} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
@@ -24,6 +28,91 @@ const Page = () => {
   const formState = useSelector((state) => state.form);
   const {data, refetch} = useGetFormsQuery(JSON.stringify(userId));
   const [addForm] = useAddFormMutation();
+  const [journeyStep, setJourneyStep] = useState(0);
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (journeyStep < wizardData.length - 1) {
+      setJourneyStep(journeyStep + 1);
+    }
+  };
+
+  const handlePrevious = (e) => {
+    e.preventDefault();
+    if (journeyStep > 0) {
+      setJourneyStep(journeyStep - 1);
+    }
+  };
+  const wizardData = [
+    {
+      body: () => <Basic onChange={handleChange} />,
+      footer: () => (
+        <>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handlePrevious(e)}>
+            back
+          </button>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handleNext(e)}>
+            next
+          </button>
+        </>
+      ),
+    },
+    {
+      body: () => <Second onChange={handleChange} />,
+      footer: () => (
+        <>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handlePrevious(e)}>
+            back
+          </button>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handleNext(e)}>
+            next
+          </button>
+        </>
+      ),
+    },
+    {
+      body: () => <Third onChange={handleChange} />,
+      footer: () => (
+        <>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handlePrevious(e)}>
+            back
+          </button>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handleNext(e)}>
+            next
+          </button>
+        </>
+      ),
+    },
+    {
+      body: () => <Last onChange={handleChange} />,
+      footer: () => (
+        <>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handlePrevious(e)}>
+            back
+          </button>
+          <button
+            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
+            onClick={(e) => handleNext(e)}>
+            next
+          </button>
+        </>
+      ),
+    },
+  ];
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -55,95 +144,25 @@ const Page = () => {
     <div className="mt-32 grid grid-cols-2">
       <div className=" m-20 grid gap-3">
         <ul className="steps">
-          <li className="step step-accent">Basic</li>
-          <li className="step step-accent">About</li>
-          <li className="step">Work history</li>
-          <li className="step">Education</li>
+          <li className={`${journeyStep === 0 ? 'step-accent' : ''} step`}>
+            Basic
+          </li>
+          <li className={`${journeyStep === 1 ? 'step-accent' : ''} step`}>
+            About
+          </li>
+          <li className={`${journeyStep === 2 ? 'step-accent' : ''} step`}>
+            Work history
+          </li>
+          <li className={`${journeyStep === 3 ? 'step-accent' : ''} step`}>
+            Education
+          </li>
         </ul>
-        <p className="grid-col grid">
-          First Name
-          <input
-            onChange={handleChange}
-            name="firstName"
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered input-accent mt-2 w-full max-w-xs"
-          />
-        </p>
-        <p className="grid-col grid">
-          <Input
-            label="Last Name"
-            onChange={handleChange}
-            name="lastName"
-            type="text"
-            error={true}
-            className="input input-bordered input-accent mt-2 w-full max-w-xs"
-          />
-        </p>
-        <p className="grid-col grid">
-          Age
-          <input
-            onChange={handleChange}
-            name="age"
-            type="text"
-            placeholder="Type here"
-            className="input input-bordered input-accent mt-2 w-full max-w-xs"
-          />
-        </p>
-        <p className="grid-col grid">
-          Nationality
-          <select
-            onChange={handleChange}
-            name="nationality"
-            className="select select-accent mt-2 w-full max-w-xs">
-            <option disabled={true} selected={true} />
 
-            <option>Polish</option>
-            <option>English</option>
-            <option>Ukrainian</option>
-          </select>
-        </p>
-        <p className="grid-col grid gap-3">
-          Sex
-          <div className="flex items-center">
-            {/* prettier-ignore */}
-            <input
-            onChange={handleChange}
-            value="m"
-            type="radio"
-            name="sex"
-            className="radio radio-accent mr-2"
-          />{' '}
-            <span>Man</span>
-          </div>
-          <div className="flex items-center">
-            {/* prettier-ignore */}
-            <input
-            onChange={handleChange}
-            type="radio"
-            name="sex"
-            value="w"
-            className="radio radio-accent mr-2"
-          />{' '}
-            <span>Woman</span>
-          </div>
-        </p>
-        <div className="mt-2 flex w-full max-w-xs items-center">
-          <div>
-            <label>
-              {/* prettier-ignore */}
-              <input
-              onChange={handleChange}
-              name="agree"
-              type="checkbox"
-              className="checkbox checkbox-accent mr-2"
-            />
-            </label>
-          </div>{' '}
-          <span className="mt-6">
-            Are You agree to convert and use Your personal data?
-          </span>
-        </div>
+        <Wizard
+          body={wizardData[journeyStep].body}
+          footer={wizardData[journeyStep].footer}
+          totalSteps={4}
+        />
         {/* prettier-ignore */}
         <button
           className="btn btn-outline btn-accent w-full max-w-xs"
