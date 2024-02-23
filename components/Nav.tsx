@@ -23,10 +23,7 @@ const Nav = () => {
           {session?.status === 'authenticated' ? (
             <>
               <li className="p-4">
-                <Link href="/prisma">Posts</Link>
-              </li>
-              <li className="p-4">
-                <Link href="/forms">Forms</Link>
+                <Link href="/forms">CV Creator</Link>
               </li>
               <button onClick={() => signOut()}>Sign Out</button>
             </>

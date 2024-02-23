@@ -2,7 +2,6 @@
 // @ts-nocheck
 import {getServerSession} from 'next-auth';
 
-import User from './../components/User';
 import {authOptions} from './../lib/authOptions';
 
 export default async function Home() {
@@ -10,11 +9,7 @@ export default async function Home() {
 
   return (
     <section className="flex flex-col items-center justify-center">
-      <h1>Homes</h1>
-      <h1>Server Side Rendered</h1>
       <pre>{JSON.stringify(session)}</pre>
-      <h1>Client Side Rendered</h1>
-      <User />
     </section>
   );
 }
