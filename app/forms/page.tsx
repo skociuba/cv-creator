@@ -8,6 +8,7 @@ import React from 'react';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
 
+import Input from '../components/ui/input';
 import {
   useAddFormMutation,
   useGetFormsQuery,
@@ -51,7 +52,7 @@ const Page = () => {
   };
 
   return (
-    <div className="grid grid-cols-2">
+    <div className="mt-32 grid grid-cols-2">
       <div className=" m-20 grid gap-3">
         <ul className="steps">
           <li className="step step-accent">Basic</li>
@@ -70,12 +71,12 @@ const Page = () => {
           />
         </p>
         <p className="grid-col grid">
-          Last Name
-          <input
+          <Input
+            label="Last Name"
             onChange={handleChange}
             name="lastName"
             type="text"
-            placeholder="Type here"
+            error={true}
             className="input input-bordered input-accent mt-2 w-full max-w-xs"
           />
         </p>

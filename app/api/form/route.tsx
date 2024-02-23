@@ -1,4 +1,4 @@
-import {NextResponse} from 'next/server';
+import {NextResponse, NextRequest} from 'next/server';
 
 import {prisma} from '../../../prisma/index';
 
@@ -10,11 +10,14 @@ async function main() {
   }
 }
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
     await main();
-
-    const form = await prisma.form.findMany();
+    const userId = req.nextUrl.searchParams.get('userId');
+    const cleanedUserId = userId?.replace(/"/g, '');
+    const form = await prisma.form.findMany({
+      where: {userId: cleanedUserId},
+    });
 
     return NextResponse.json({message: 'Success', form}, {status: 200});
   } catch (err) {

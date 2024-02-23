@@ -1,15 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-import {getServerSession} from 'next-auth';
-
-import {authOptions} from './../lib/authOptions';
-
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-
   return (
-    <section className="flex flex-col items-center justify-center">
-      <pre>{JSON.stringify(session)}</pre>
-    </section>
+    <div className="bg-custom bg-size-custom flex min-h-screen w-full flex-col items-center justify-center bg-fixed text-white">
+      <div className="fixed inset-0 bg-black/70" />
+      <div className="z-10">CV Creator</div>
+    </div>
   );
 }
