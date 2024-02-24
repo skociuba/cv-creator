@@ -17,7 +17,7 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
         name="firstName"
         type="text"
         placeholder="Type here"
-        className="input input-bordered input-accent mt-2 w-full max-w-xs"
+        className="input input-bordered input-accent my-2 w-full max-w-xs"
       />
     </p>
     <p className="grid-col grid">
@@ -35,7 +35,7 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
         name="age"
         type="text"
         placeholder="Type here"
-        className="input input-bordered input-accent mt-2 w-full max-w-xs"
+        className="input input-bordered input-accent  my-2  w-full max-w-xs"
       />
     </p>
     <p className="grid-col grid">
@@ -43,7 +43,7 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
       <select
         onChange={handleChange}
         name="nationality"
-        className="select select-accent mt-2 w-full max-w-xs">
+        className="select select-accent my-2  w-full max-w-xs">
         <option disabled={true} selected={true} />
 
         <option>Polish</option>
@@ -76,22 +76,6 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
         <span>Woman</span>
       </div>
     </p>
-    <div className="mt-2 flex w-full max-w-xs items-center">
-      <div>
-        <label>
-          {/* prettier-ignore */}
-          <input
-        onChange={handleChange}
-        name="agree"
-        type="checkbox"
-        className="checkbox checkbox-accent mr-2"
-      />
-        </label>
-      </div>{' '}
-      <span className="mt-6">
-        Are You agree to convert and use Your personal data?
-      </span>
-    </div>
   </div>
 );
 

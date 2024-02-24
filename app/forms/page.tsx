@@ -115,8 +115,8 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-[45px] grid grid-cols-2">
-      <div className=" m-20 grid gap-3">
+    <div className="mt-[48px] grid grid-cols-2">
+      <div className="mt-14 grid gap-3">
         <ul className="steps">
           <li className={`${journeyStep === 0 ? 'step-accent' : ''} step`}>
             Basic
@@ -132,7 +132,7 @@ const Page = () => {
           </li>
         </ul>
 
-        <div className="ml-32 mt-5">
+        <div className="ml-32">
           {' '}
           <Wizard
             body={wizardData[journeyStep].body}
@@ -141,7 +141,7 @@ const Page = () => {
           />
         </div>
       </div>
-      <div>
+      <div className="mt-20">
         {data?.form?.map((el) => (
           <p key={el?.id}>
             <Link key={el?.id} href={`/form/${el?.id}`}>

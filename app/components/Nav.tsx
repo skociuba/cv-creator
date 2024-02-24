@@ -21,7 +21,7 @@ const Nav = () => {
         borderBottom: `${pathname === '/' ? `none` : `1px solid #3ffdfe`}`,
         color: `${pathname === '/' ? `white` : `black`}`,
       }}
-      className="fixed left-0 top-0 z-10 w-full text-2xl">
+      className="fixed left-0 top-0 z-10 w-full">
       <div className="flex items-center justify-between p-4">
         <ul className="flex-column flex">
           <li className="p-4">

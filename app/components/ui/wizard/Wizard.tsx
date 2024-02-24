@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Wizard: React.FC<Props> = ({header, body, footer, ...props}) => (
-  <div {...props} className="flex h-[600px] flex-col justify-between">
+  <div {...props} className="flex h-[520px] flex-col justify-between">
     <div>
       <p>{header && header()}</p>
       <p>{body && body()}</p>
