@@ -8,7 +8,12 @@ export const FormApi = createApi({
 
   endpoints: (builder) => ({
     getForms: builder.query({
-      query: () => ({url: `/api/form`, method: 'GET'}),
+      query: (userId) => {
+        if (!userId) {
+          return {url: '', method: 'GET'};
+        }
+        return {url: `/api/form?userId=${userId}`, method: 'GET'};
+      },
     }),
     addForm: builder.mutation({
       query: (formData) => ({

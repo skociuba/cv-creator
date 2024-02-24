@@ -19,6 +19,10 @@ const config: Config = {
         'custom-light-grey': '#374151',
         'custom-purple': '#500724',
       },
+
+      backgroundImage: {custom: `url('/images/getJob.jpg')`},
+      backgroundAttachment: {custom: 'fixed'},
+      backgroundSize: {custom: 'cover'},
     },
   },
   variants: {

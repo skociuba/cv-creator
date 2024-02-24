@@ -30,7 +30,7 @@ const User = ({params}) => {
     });
   };
   return (
-    <div className="mx-auto rounded-md bg-white p-5 text-center">
+    <div className="mx-auto mt-32 rounded-md bg-white p-5 text-center">
       {/* prettier-ignore */}
       <button
         className="btn btn-outline btn-accent mb-8 w-full max-w-xs"
