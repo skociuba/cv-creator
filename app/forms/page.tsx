@@ -9,6 +9,7 @@ import {useSession} from 'next-auth/react';
 import Link from 'next/link';
 
 import Wizard from '../components/ui/wizard/Wizard';
+import WizardButtons from '../components/ui/wizard/WizardButtons';
 import {
   useAddFormMutation,
   useGetFormsQuery,
@@ -45,71 +46,44 @@ const Page = () => {
   };
   const wizardData = [
     {
-      body: () => <Basic onChange={handleChange} />,
+      body: () => <Basic handleChange={handleChange} />,
       footer: () => (
-        <>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handlePrevious(e)}>
-            back
-          </button>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handleNext(e)}>
-            next
-          </button>
-        </>
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
       ),
     },
     {
-      body: () => <Second onChange={handleChange} />,
+      body: () => <Second handleChange={handleChange} />,
       footer: () => (
-        <>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handlePrevious(e)}>
-            back
-          </button>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handleNext(e)}>
-            next
-          </button>
-        </>
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
       ),
     },
     {
-      body: () => <Third onChange={handleChange} />,
+      body: () => <Third handleChange={handleChange} />,
       footer: () => (
-        <>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handlePrevious(e)}>
-            back
-          </button>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handleNext(e)}>
-            next
-          </button>
-        </>
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
       ),
     },
     {
-      body: () => <Last onChange={handleChange} />,
+      body: () => <Last handleSubmit={handleSubmit} />,
       footer: () => (
-        <>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handlePrevious(e)}>
-            back
-          </button>
-          <button
-            className="btn btn-accent btn-outline mb-2 w-full max-w-xs"
-            onClick={(e) => handleNext(e)}>
-            next
-          </button>
-        </>
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+          handleSubmit={handleSubmit}
+        />
       ),
     },
   ];
@@ -141,7 +115,7 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-32 grid grid-cols-2">
+    <div className="mt-[45px] grid grid-cols-2">
       <div className=" m-20 grid gap-3">
         <ul className="steps">
           <li className={`${journeyStep === 0 ? 'step-accent' : ''} step`}>
@@ -158,17 +132,14 @@ const Page = () => {
           </li>
         </ul>
 
-        <Wizard
-          body={wizardData[journeyStep].body}
-          footer={wizardData[journeyStep].footer}
-          totalSteps={4}
-        />
-        {/* prettier-ignore */}
-        <button
-          className="btn btn-outline btn-accent w-full max-w-xs"
-          onClick={handleSubmit}>
-          Submit
-        </button>
+        <div className="ml-32 mt-5">
+          {' '}
+          <Wizard
+            body={wizardData[journeyStep].body}
+            footer={wizardData[journeyStep].footer}
+            totalSteps={4}
+          />
+        </div>
       </div>
       <div>
         {data?.form?.map((el) => (
