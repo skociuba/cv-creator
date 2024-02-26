@@ -26,7 +26,6 @@ const Input: React.FC<Props> = ({
 }) => (
   <div>
     <p>
-      {' '}
       <label htmlFor={name}>{label}</label>
     </p>
     <input

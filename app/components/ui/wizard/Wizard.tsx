@@ -9,10 +9,10 @@ type Props = {
 const Wizard: React.FC<Props> = ({header, body, footer, ...props}) => (
   <div {...props} className="flex h-[520px] flex-col justify-between">
     <div>
-      <p>{header && header()}</p>
-      <p>{body && body()}</p>
+      <div>{header && header()}</div>
+      <div>{body && body()}</div>
     </div>
-    <p>{footer && footer()}</p>
+    <div>{footer && footer()}</div>
   </div>
 );
 export default Wizard;

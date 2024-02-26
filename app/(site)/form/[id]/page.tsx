@@ -6,7 +6,7 @@ import React, {useRef} from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-import {useGetFormsQuery} from '../../../provider/redux/form/form';
+import {useGetFormsQuery} from '../../../../provider/redux/form/form';
 const User = ({params}) => {
   const session = useSession();
   const userId = session?.data?.user?.id;

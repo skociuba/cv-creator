@@ -8,13 +8,13 @@ import React, {useState} from 'react';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
 
-import Wizard from '../components/ui/wizard/Wizard';
-import WizardButtons from '../components/ui/wizard/WizardButtons';
+import Wizard from '../../components/ui/wizard/Wizard';
+import WizardButtons from '../../components/ui/wizard/WizardButtons';
 import {
   useAddFormMutation,
   useGetFormsQuery,
-} from '../../provider/redux/form/form';
-import {FormState} from '../../types/form';
+} from '../../../provider/redux/form/form';
+import {FormState} from '../../../types/form';
 
 import Basic from './wizardComponents/Basic';
 import Second from './wizardComponents/Second';
@@ -137,7 +137,6 @@ const Page = () => {
           <Wizard
             body={wizardData[journeyStep].body}
             footer={wizardData[journeyStep].footer}
-            totalSteps={4}
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '../../components/ui/input';
+import Input from '../../../components/ui/input';
 type BasicProps = {
   handleChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -9,8 +9,7 @@ type BasicProps = {
 
 const Basic: React.FC<BasicProps> = ({handleChange}) => (
   <div>
-    {' '}
-    <p className="grid-col grid">
+    <div className="grid-col grid">
       First Name
       <input
         onChange={handleChange}
@@ -19,16 +18,16 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
         placeholder="Type here"
         className="input input-bordered input-accent my-2 w-full max-w-xs"
       />
-    </p>
-    <p className="grid-col grid">
+    </div>
+    <div className="grid-col grid">
       <Input
         label="Last Name"
         onChange={handleChange}
         name="lastName"
         type="text"
       />
-    </p>
-    <p className="grid-col grid">
+    </div>
+    <div className="grid-col grid">
       Age
       <input
         onChange={handleChange}
@@ -37,45 +36,46 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
         placeholder="Type here"
         className="input input-bordered input-accent  my-2  w-full max-w-xs"
       />
-    </p>
-    <p className="grid-col grid">
+    </div>
+    <div className="grid-col grid">
       Nationality
       <select
         onChange={handleChange}
         name="nationality"
+        defaultValue="defaultOptionValue"
         className="select select-accent my-2  w-full max-w-xs">
-        <option disabled={true} selected={true} />
+        <option disabled={true} value="defaultOptionValue" />
 
         <option>Polish</option>
         <option>English</option>
         <option>Ukrainian</option>
       </select>
-    </p>
-    <p className="grid-col grid gap-3">
+    </div>
+    <div className="grid-col grid gap-3">
       Sex
       <div className="flex items-center">
         {/* prettier-ignore */}
         <input
-      onChange={handleChange}
-      value="m"
-      type="radio"
-      name="sex"
-      className="radio radio-accent mr-2"
-    />{' '}
+          onChange={handleChange}
+          value="m"
+          type="radio"
+          name="sex"
+          className="radio radio-accent mr-2"
+        />
         <span>Man</span>
       </div>
       <div className="flex items-center">
         {/* prettier-ignore */}
         <input
-      onChange={handleChange}
-      type="radio"
-      name="sex"
-      value="w"
-      className="radio radio-accent mr-2"
-    />{' '}
+          onChange={handleChange}
+          type="radio"
+          name="sex"
+          value="w"
+          className="radio radio-accent mr-2"
+        />
         <span>Woman</span>
       </div>
-    </p>
+    </div>
   </div>
 );
 

@@ -1,7 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/query';
 
-import formSlice from '../../app/forms/slice';
+import formSlice from '../../app/(site)/forms/slice';
 
 import {FormApi} from './form/form';
 export const store = configureStore({
