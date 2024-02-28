@@ -20,7 +20,7 @@ import Basic from './wizardComponents/Basic';
 import Second from './wizardComponents/Second';
 import Third from './wizardComponents/Third';
 import Last from './wizardComponents/Last';
-import {updateField} from './slice';
+import {updateField, addWorkHistoryItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
   const session = useSession();
@@ -30,6 +30,12 @@ const Page = () => {
   const {data, refetch} = useGetFormsQuery(JSON.stringify(userId));
   const [addForm] = useAddFormMutation();
   const [journeyStep, setJourneyStep] = useState(0);
+  const [job, setJob] = useState({
+    position: '',
+    employer: '',
+    startDate: '',
+    endDate: '',
+  });
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -44,6 +50,7 @@ const Page = () => {
       setJourneyStep(journeyStep - 1);
     }
   };
+
   const wizardData = [
     {
       body: () => <Basic handleChange={handleChange} />,
@@ -66,7 +73,13 @@ const Page = () => {
       ),
     },
     {
-      body: () => <Third handleChange={handleChange} />,
+      body: () => (
+        <Third
+          setJob={handleItemChange}
+          handleAddItem={handleAddItem}
+          data={formState}
+        />
+      ),
       footer: () => (
         <WizardButtons
           handlePrevious={handlePrevious}
@@ -99,6 +112,18 @@ const Page = () => {
         ? e.target.checked
         : e.target.value;
     dispatch(updateField({field, value}));
+  };
+
+  const handleAddItem = () => {
+    dispatch(addWorkHistoryItem(job));
+  };
+
+  const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setJob((prevJob) => ({
+      ...prevJob,
+      [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement)
+        .value,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -146,8 +171,7 @@ const Page = () => {
             <Link key={el?.id} href={`/form/${el?.id}`}>
               {/* prettier-ignore */}
               <button className="btn btn-outline btn-accent mb-2 w-full max-w-xs">
-                {' '}
-                {el?.id}{' '}
+                {el?.id}
               </button>
             </Link>
           </p>

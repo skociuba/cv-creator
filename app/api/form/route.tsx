@@ -17,6 +17,9 @@ export const GET = async (req: NextRequest) => {
     const cleanedUserId = userId?.replace(/"/g, '');
     const form = await prisma.form.findMany({
       where: {userId: cleanedUserId},
+      include: {
+        workHistory: true,
+      },
     });
 
     return NextResponse.json({message: 'Success', form}, {status: 200});
@@ -32,7 +35,15 @@ export const POST = async (request: Request) => {
     await main();
     const formData = await request.json();
     const form = await prisma.form.create({
-      data: formData,
+      data: {
+        ...formData,
+        workHistory: {
+          create: formData.workHistory,
+        },
+      },
+      include: {
+        workHistory: true,
+      },
     });
 
     return NextResponse.json({message: 'Add Success', form}, {status: 200});

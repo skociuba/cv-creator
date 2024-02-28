@@ -15,7 +15,7 @@ const User = ({params}) => {
   const selectForm = (formId) =>
     data?.form?.find((form) => form?.id === formId);
   const pdfRef = useRef(null);
-
+  const workHistory = selectForm(id)?.workHistory;
   const createPdf = () => {
     html2canvas(pdfRef.current).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -53,20 +53,28 @@ const User = ({params}) => {
                   {selectForm(id)?.lastName || `-`}
                 </h1>
                 <p className=" mb-8 py-2">webdeveloper</p>
+      
+                
                 <p className="py-2">
-                  <strong>Last Name:</strong> {selectForm(id)?.lastName || `-`}
+                  <strong>About:</strong>{' '}
+                 <p className='flex flex-col flex-wrap text-justify mr-5'> {selectForm(id)?.about || `-`}</p>
                 </p>
                 <p className="py-2">
-                  <strong>Sex:</strong> {selectForm(id)?.sex || `-`}
-                </p>
-                <p className="py-2">
-                  <strong>Age:</strong> {selectForm(id)?.age || `-`}
-                </p>
-                <p className="py-2">
-                  <strong>Nationality:</strong>{' '}
-                  {selectForm(id)?.nationality || `-`}
-                </p>
+                  <strong>Work history:</strong>{' '}
+                {workHistory?.map((el) => (
+        <div
+          key={el?.employer}
+          className="my-2 mb-2 w-1/2 rounded-lg border border-accent p-3">
+          <p className="pb-2">
+            {el?.position} - {el?.employer}
+          </p>
+          <p key={el?.id}>
+            {el?.startDate} - {el?.endDate}
+          </p>
+        </div>
+      ))}</p>
               </div>
+         
               <div className="col-span-1 bg-accent py-4 pl-6 text-left">
                 <ul>
                   <p className="font-bold">Details</p>

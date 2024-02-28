@@ -10,8 +10,10 @@ const initialState: FormState = {
   lastName: '',
   age: null,
   nationality: '',
+  about: '',
   sex: null,
   agree: null,
+  workHistory: [],
 };
 
 const formSlice = createSlice({
@@ -25,9 +27,16 @@ const formSlice = createSlice({
       state[action.payload.field] = action.payload.value;
       console.log(current(state));
     },
+    addWorkHistoryItem: (state, action: PayloadAction<WorkHistoryItem>) => {
+      state.workHistory.push(action.payload);
+    },
+    removeWorkHistoryItem: (state, action: PayloadAction<number>) => {
+      state.workHistory.splice(action.payload, 1);
+    },
   },
 });
 
-export const {updateField} = formSlice.actions;
+export const {updateField, addWorkHistoryItem, removeWorkHistoryItem} =
+  formSlice.actions;
 
 export default formSlice.reducer;
