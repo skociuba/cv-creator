@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Input from '../../../components/ui/Input';
+import Input from '#/components/ui/Input';
 type BasicProps = {
   handleChange: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
