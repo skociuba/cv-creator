@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 
 import Button from '../Button';
-import Input from '../Input';
+import Input from '../input';
 
 type WorkItemProps = {
   setJob: (event: React.ChangeEvent<HTMLInputElement>) => void;
