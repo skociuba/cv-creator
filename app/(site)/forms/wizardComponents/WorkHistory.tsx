@@ -19,12 +19,14 @@ type WorkItemProps = {
   handleAddItem: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void;
+  handleRemoveItem: (index: number) => void;
   data: Data;
 };
 
 const WorkHistory: React.FC<WorkItemProps> = ({
   setJob,
   handleAddItem,
+  handleRemoveItem,
   data,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,16 +35,19 @@ const WorkHistory: React.FC<WorkItemProps> = ({
     <div className="grid-col grid">
       <h1 className="my-2">Add work Positions</h1>
       <Button onClick={() => setIsModalOpen(true)}>add</Button>
-      {data?.workHistory?.map((el) => (
+      {data?.workHistory?.map((el, index) => (
         <div
           key={el?.employer}
-          className="my-2 mb-2 rounded-lg border border-accent p-3">
-          <p className="pb-2">
-            {el?.position} - {el?.employer}
-          </p>
-          <p>
-            {el?.startDate} - {el?.endDate}
-          </p>
+          className="my-2 mb-2 grid grid-cols-2 rounded-lg border  border-accent p-3">
+          <div>
+            <p className="pb-2">
+              {el?.position} - {el?.employer}
+            </p>
+            <p>
+              {el?.startDate} - {el?.endDate}
+            </p>
+          </div>
+          <Button onClick={() => handleRemoveItem(index)}>remove</Button>
         </div>
       ))}
       <WorkItemModal

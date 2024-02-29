@@ -23,7 +23,7 @@ import PersonalDetails from './wizardComponents/PersonalDetails';
 import About from './wizardComponents/About';
 import WorkHistory from './wizardComponents/WorkHistory';
 import EducationHistory from './wizardComponents/EducationHistory';
-import {updateField, addWorkHistoryItem} from './slice';
+import {updateField, addWorkHistoryItem, removeWorkHistoryItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
   const session = useSession();
@@ -72,6 +72,7 @@ const Page = () => {
         <WorkHistory
           setJob={handleItemChange}
           handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
           data={formState}
         />
       ),
@@ -125,6 +126,10 @@ const Page = () => {
 
   const handleAddItem = () => {
     dispatch(addWorkHistoryItem(job));
+  };
+
+  const handleRemoveItem = (index: number) => {
+    dispatch(removeWorkHistoryItem(index));
   };
 
   const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {

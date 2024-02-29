@@ -9,7 +9,7 @@ const About: React.FC<AboutProps> = ({handleChange}) => (
     <h1 className="mb-2">Tell Us something about Yourself</h1>
 
     <textarea
-      className="textarea textarea-accent textarea-lg w-full max-w-xs"
+      className="textarea textarea-accent textarea-lg w-full"
       style={{height: '400px'}}
       onChange={handleChange}
       name="about"
