@@ -1,7 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
 
-import Input from '../input';
+import Button from '../Button';
+import Input from '../Input';
 
 type WorkItemProps = {
   setJob: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,7 +13,7 @@ type WorkItemProps = {
   setIsModalOpen: (value: boolean) => void;
 };
 
-const WorkItem: React.FC<WorkItemProps> = ({
+const WorkItemModal: React.FC<WorkItemProps> = ({
   isModalOpen,
   setIsModalOpen,
   setJob,
@@ -22,7 +23,7 @@ const WorkItem: React.FC<WorkItemProps> = ({
     isOpen={isModalOpen}
     onRequestClose={() => setIsModalOpen(false)}
     contentLabel="Edit Post"
-    className="mt-7 w-[380px] scale-100 transform items-center justify-center rounded-lg bg-white p-8 shadow-xl transition-transform duration-300"
+    className="mt-12 w-[380px] scale-100 transform items-center justify-center rounded-lg bg-white p-8 shadow-xl transition-transform duration-300"
     overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
     <div>
       <p className="pt-3">
@@ -31,7 +32,7 @@ const WorkItem: React.FC<WorkItemProps> = ({
       <p className="pt-3">
         <Input label="Employer" onChange={setJob} name="employer" type="text" />
       </p>
-      <div className="grid grid-cols-2 pt-3">
+      <div className="grid grid-cols-2 py-3">
         <p
           className="pr-3 
         ">
@@ -52,19 +53,14 @@ const WorkItem: React.FC<WorkItemProps> = ({
         </p>
       </div>
     </div>
-    <button
+    <Button
       onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         handleAddItem(event);
         setIsModalOpen(false);
-      }}
-      className="btn btn-accent btn-outline my-2 w-full max-w-xs">
+      }}>
       Save changes
-    </button>
-    <button
-      onClick={() => setIsModalOpen(false)}
-      className="btn btn-accent btn-outline mb-2 w-full max-w-xs">
-      Cancel
-    </button>
+    </Button>
+    <Button onClick={() => setIsModalOpen(false)}>Cancel</Button>
   </Modal>
 );
-export default WorkItem;
+export default WorkItemModal;

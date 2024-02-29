@@ -8,18 +8,21 @@ import React, {useState} from 'react';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
 
-import Wizard from '../../components/ui/wizard/Wizard';
-import WizardButtons from '../../components/ui/wizard/WizardButtons';
+import ProgressIndicator from '#/components/ui/ProgressIndicator';
+import Button from '#/components/ui/Button';
+import Wizard from '#/components/ui/wizard/Wizard';
+import WizardButtons from '#/components/ui/wizard/WizardButtons';
+
 import {
   useAddFormMutation,
   useGetFormsQuery,
 } from '../../../provider/redux/form/form';
 import {FormState} from '../../../types/form';
 
-import Basic from './wizardComponents/Basic';
-import Second from './wizardComponents/Second';
-import Third from './wizardComponents/Third';
-import Last from './wizardComponents/Last';
+import PersonalDetails from './wizardComponents/PersonalDetails';
+import About from './wizardComponents/About';
+import WorkHistory from './wizardComponents/WorkHistory';
+import EducationHistory from './wizardComponents/EducationHistory';
 import {updateField, addWorkHistoryItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
@@ -37,23 +40,15 @@ const Page = () => {
     endDate: '',
   });
 
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (journeyStep < wizardData.length - 1) {
-      setJourneyStep(journeyStep + 1);
-    }
-  };
-
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    if (journeyStep > 0) {
-      setJourneyStep(journeyStep - 1);
-    }
-  };
-
+  const progressIndicatorData = [
+    'Personal details',
+    'About',
+    'Work history',
+    'Education',
+  ];
   const wizardData = [
     {
-      body: () => <Basic handleChange={handleChange} />,
+      body: () => <PersonalDetails handleChange={handleChange} />,
       footer: () => (
         <WizardButtons
           handlePrevious={handlePrevious}
@@ -63,7 +58,7 @@ const Page = () => {
       ),
     },
     {
-      body: () => <Second handleChange={handleChange} />,
+      body: () => <About handleChange={handleChange} />,
       footer: () => (
         <WizardButtons
           handlePrevious={handlePrevious}
@@ -74,7 +69,7 @@ const Page = () => {
     },
     {
       body: () => (
-        <Third
+        <WorkHistory
           setJob={handleItemChange}
           handleAddItem={handleAddItem}
           data={formState}
@@ -89,7 +84,7 @@ const Page = () => {
       ),
     },
     {
-      body: () => <Last handleSubmit={handleSubmit} />,
+      body: () => <EducationHistory handleSubmit={handleSubmit} />,
       footer: () => (
         <WizardButtons
           handlePrevious={handlePrevious}
@@ -100,6 +95,20 @@ const Page = () => {
       ),
     },
   ];
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (journeyStep < wizardData.length - 1) {
+      setJourneyStep(journeyStep + 1);
+    }
+  };
+
+  const handlePrevious = (e) => {
+    e.preventDefault();
+    if (journeyStep > 0) {
+      setJourneyStep(journeyStep - 1);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -140,39 +149,24 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-[48px] grid grid-cols-2">
-      <div className="mt-14 grid gap-3">
-        <ul className="steps">
-          <li className={`${journeyStep === 0 ? 'step-accent' : ''} step`}>
-            Basic
-          </li>
-          <li className={`${journeyStep === 1 ? 'step-accent' : ''} step`}>
-            About
-          </li>
-          <li className={`${journeyStep === 2 ? 'step-accent' : ''} step`}>
-            Work history
-          </li>
-          <li className={`${journeyStep === 3 ? 'step-accent' : ''} step`}>
-            Education
-          </li>
-        </ul>
-
-        <div className="ml-32">
-          {' '}
+    <div className="mt-[110px] grid grid-cols-2 ">
+      <div className="flex flex-col">
+        <ProgressIndicator
+          translations={progressIndicatorData}
+          journeyStep={journeyStep}
+        />
+        <div className="mx-8 mt-3">
           <Wizard
             body={wizardData[journeyStep].body}
             footer={wizardData[journeyStep].footer}
           />
         </div>
       </div>
-      <div className="mt-20">
+      <div className="mt-12 flex flex-col items-center">
         {data?.form?.map((el) => (
           <p key={el?.id}>
             <Link key={el?.id} href={`/form/${el?.id}`}>
-              {/* prettier-ignore */}
-              <button className="btn btn-outline btn-accent mb-2 w-full max-w-xs">
-                {el?.id}
-              </button>
+              <Button>{el?.id}</Button>
             </Link>
           </p>
         ))}

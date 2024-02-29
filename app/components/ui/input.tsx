@@ -25,7 +25,7 @@ const Input: React.FC<Props> = ({
   ...props
 }) => (
   <div>
-    <p>
+    <p className="pt-2">
       <label htmlFor={name}>{label}</label>
     </p>
     <input

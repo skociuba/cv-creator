@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Last = () => (
+const EducationHistory = () => (
   <div className=" mt-10 flex items-center justify-center">last</div>
 );
 
-export default Last;
+export default EducationHistory;

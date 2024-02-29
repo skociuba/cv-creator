@@ -1,47 +1,34 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+
 'use client';
 import {useSession} from 'next-auth/react';
 import React, {useRef} from 'react';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
+import Button from '#/./components/ui/Button';
+
+import {createPdf} from '../../../helpers';
 import {useGetFormsQuery} from '../../../../provider/redux/form/form';
+
 const User = ({params}) => {
   const session = useSession();
   const userId = session?.data?.user?.id;
   const {data, isLoading} = useGetFormsQuery(JSON.stringify(userId));
-  const id = params.id;
+  const id = params?.id;
   const selectForm = (formId) =>
     data?.form?.find((form) => form?.id === formId);
+
+  const content = selectForm(id);
+
   const pdfRef = useRef(null);
-  const workHistory = selectForm(id)?.workHistory;
-  const createPdf = () => {
-    html2canvas(pdfRef.current).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      // A4 size in pt: [595.28, 841.89]
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'pt',
-        format: [595.28, 841.89],
-      });
-      pdf.addImage(imgData, 'PNG', 0, 0, 595.28, 841.89);
-      pdf.save('download.pdf');
-    });
-  };
+
   return (
-    <div className="mx-auto mt-32 rounded-md bg-white p-5 text-center">
-      {/* prettier-ignore */}
-      <button
-        className="btn btn-outline btn-accent mb-8 w-full max-w-xs"
-        onClick={createPdf}>
-        Download PDF
-      </button>
+    <div className="mx-auto mt-32 rounded-md bg-white text-center">
+      <Button onClick={() => createPdf(pdfRef)}>Download PDF</Button>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
         <div className="mt-4 flex min-h-screen items-center justify-center">
-          {/* prettier-ignore */}
           <div
             ref={pdfRef}
             className="mx-auto block h-a4 w-a4  rounded-lg border shadow-2xl">
@@ -49,38 +36,39 @@ const User = ({params}) => {
               <div className="col-span-2 pl-6 text-left">
                 <h1 className="py-4 text-3xl font-bold">
                   {' '}
-                  {selectForm(id)?.firstName || `-`}{' '}
-                  {selectForm(id)?.lastName || `-`}
+                  {content?.firstName || `-`} {content?.lastName || `-`}
                 </h1>
-                <p className=" mb-8 py-2">webdeveloper</p>
-      
-                
+                <p className=" mb-8 py-2"> {content?.jobTitle || `-`}</p>
+
                 <p className="py-2">
-                  <strong>About:</strong>{' '}
-                 <p className='flex flex-col flex-wrap text-justify mr-5'> {selectForm(id)?.about || `-`}</p>
+                  <strong>Profile</strong>{' '}
+                  <p className="mr-6 mt-5 flex flex-col flex-wrap text-justify">
+                    {' '}
+                    {content?.about || `-`}
+                  </p>
                 </p>
-                <p className="py-2">
-                  <strong>Work history:</strong>{' '}
-                {workHistory?.map((el) => (
-        <div
-          key={el?.employer}
-          className="my-2 mb-2 w-1/2 rounded-lg border border-accent p-3">
-          <p className="pb-2">
-            {el?.position} - {el?.employer}
-          </p>
-          <p key={el?.id}>
-            {el?.startDate} - {el?.endDate}
-          </p>
-        </div>
-      ))}</p>
+                <p className="py-5">
+                  <strong>Employment history</strong>
+                  {content?.workHistory?.map((el) => (
+                    <div key={el?.employer} className="my-2 mb-2 py-3">
+                      <p className="pb-2">
+                        {el?.position} - {el?.employer}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        <span>{el?.startDate}</span>
+                        <span className="ml-3">{el?.endDate}</span>
+                      </p>
+                    </div>
+                  ))}
+                </p>
               </div>
-         
-              <div className="col-span-1 bg-accent py-4 pl-6 text-left">
+              <div className="col-span-1  bg-accent py-4 pl-6 text-left text-sm">
                 <ul>
-                  <p className="font-bold">Details</p>
-                  <li className="py-2">phone</li>
-                  <li className="py-2">email</li>
-                  <li className="py-2">city</li>
+                  <p className="py-3 font-bold">Details</p>
+                  <li className="py-2"> {content?.nationality || `-`}</li>
+                  <li className="py-2"> {content?.city || `-`}</li>
+                  <li className="py-2"> {content?.phone || `-`}</li>
+                  <li className="py-2 "> {content?.email || `-`}</li>
                 </ul>{' '}
               </div>{' '}
             </div>

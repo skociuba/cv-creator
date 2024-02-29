@@ -4,7 +4,7 @@ type AboutProps = {
   handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-const Second: React.FC<AboutProps> = ({handleChange}) => (
+const About: React.FC<AboutProps> = ({handleChange}) => (
   <div className="grid-col grid">
     <h1 className="mb-2">Tell us something about Yourself </h1>
 
@@ -17,4 +17,4 @@ const Second: React.FC<AboutProps> = ({handleChange}) => (
     />
   </div>
 );
-export default Second;
+export default About;

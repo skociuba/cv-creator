@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 
-import WorkItem from '../../../components/ui/workItem/WorkItem';
+import Button from '#/./components/ui/Button';
 
+import WorkItemModal from '../../../components/ui/workItem/WorkItemModal';
 type Data = {
   workHistory: {
     position: string;
@@ -21,21 +22,21 @@ type WorkItemProps = {
   data: Data;
 };
 
-const Third: React.FC<WorkItemProps> = ({setJob, handleAddItem, data}) => {
+const WorkHistory: React.FC<WorkItemProps> = ({
+  setJob,
+  handleAddItem,
+  data,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="grid-col grid">
-      <h1 className="mb-2">Add work Positions</h1>
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="btn btn-accent btn-outline mb-2 w-full max-w-xs">
-        add
-      </button>
+      <h1 className="my-2">Add work Positions</h1>
+      <Button onClick={() => setIsModalOpen(true)}>add</Button>
       {data?.workHistory?.map((el) => (
         <div
           key={el?.employer}
-          className="my-2 mb-2 w-1/2 rounded-lg border border-accent p-3">
+          className="my-2 mb-2 rounded-lg border border-accent p-3">
           <p className="pb-2">
             {el?.position} - {el?.employer}
           </p>
@@ -44,7 +45,7 @@ const Third: React.FC<WorkItemProps> = ({setJob, handleAddItem, data}) => {
           </p>
         </div>
       ))}
-      <WorkItem
+      <WorkItemModal
         handleAddItem={handleAddItem}
         setJob={setJob}
         isModalOpen={isModalOpen}
@@ -53,4 +54,4 @@ const Third: React.FC<WorkItemProps> = ({setJob, handleAddItem, data}) => {
     </div>
   );
 };
-export default Third;
+export default WorkHistory;

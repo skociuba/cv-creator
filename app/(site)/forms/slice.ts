@@ -8,11 +8,12 @@ import {FormState} from '../../../types/form';
 const initialState: FormState = {
   firstName: '',
   lastName: '',
-  age: null,
+  jobTitle: '',
   nationality: '',
   about: '',
-  sex: null,
-  agree: null,
+  city: '',
+  email: '',
+  phone: '',
   workHistory: [],
 };
 
