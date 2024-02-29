@@ -6,7 +6,7 @@ type AboutProps = {
 
 const About: React.FC<AboutProps> = ({handleChange}) => (
   <div className="grid-col grid">
-    <h1 className="mb-2">Tell us something about Yourself </h1>
+    <h1 className="mb-2">Tell Us something about Yourself</h1>
 
     <textarea
       className="textarea textarea-accent textarea-lg w-full max-w-xs"
