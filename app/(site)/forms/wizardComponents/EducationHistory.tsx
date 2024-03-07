@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 
 import Button from '#/./components/ui/Button';
 
-import WorkItemModal from '../../../components/ui/workItem/WorkItemModal';
+import ItemModal from '../../../components/ui/modal/ItemModal';
+
+import EducationModalContent from './EducationModalContent';
 type Data = {
   educationHistory: {
     position: string;
@@ -49,12 +51,13 @@ const EducationHistory: React.FC<WorkItemProps> = ({
           </Button>
         </div>
       ))}
-      <WorkItemModal
-        handleAddItem={() => handleAddItem('educationHistory')}
-        setJob={setJob}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
+      <ItemModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
+        <EducationModalContent
+          handleAddItem={() => handleAddItem('educationHistory')}
+          setJob={setJob}
+          setIsModalOpen={setIsModalOpen}
+        />
+      </ItemModal>
     </div>
   );
 };
