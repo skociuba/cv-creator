@@ -8,19 +8,22 @@ import React, {useState} from 'react';
 import {useSession} from 'next-auth/react';
 import Link from 'next/link';
 
-import Wizard from '../../components/ui/wizard/Wizard';
-import WizardButtons from '../../components/ui/wizard/WizardButtons';
+import ProgressIndicator from '#/components/ui/ProgressIndicator';
+import Button from '#/components/ui/Button';
+import Wizard from '#/components/ui/wizard/Wizard';
+import WizardButtons from '#/components/ui/wizard/WizardButtons';
+
 import {
   useAddFormMutation,
   useGetFormsQuery,
 } from '../../../provider/redux/form/form';
 import {FormState} from '../../../types/form';
 
-import Basic from './wizardComponents/Basic';
-import Second from './wizardComponents/Second';
-import Third from './wizardComponents/Third';
-import Last from './wizardComponents/Last';
-import {updateField, addWorkHistoryItem} from './slice';
+import PersonalDetails from './wizardComponents/PersonalDetails';
+import About from './wizardComponents/About';
+import WorkHistory from './wizardComponents/WorkHistory';
+import EducationHistory from './wizardComponents/EducationHistory';
+import {updateField, addItem, removeItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
   const session = useSession();
@@ -30,12 +33,8 @@ const Page = () => {
   const {data, refetch} = useGetFormsQuery(JSON.stringify(userId));
   const [addForm] = useAddFormMutation();
   const [journeyStep, setJourneyStep] = useState(0);
-  const [job, setJob] = useState({
-    position: '',
-    employer: '',
-    startDate: '',
-    endDate: '',
-  });
+  const [job, setJob] = useState();
+  const [education, setEducation] = useState();
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -51,56 +50,6 @@ const Page = () => {
     }
   };
 
-  const wizardData = [
-    {
-      body: () => <Basic handleChange={handleChange} />,
-      footer: () => (
-        <WizardButtons
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          journeyStep={journeyStep}
-        />
-      ),
-    },
-    {
-      body: () => <Second handleChange={handleChange} />,
-      footer: () => (
-        <WizardButtons
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          journeyStep={journeyStep}
-        />
-      ),
-    },
-    {
-      body: () => (
-        <Third
-          setJob={handleItemChange}
-          handleAddItem={handleAddItem}
-          data={formState}
-        />
-      ),
-      footer: () => (
-        <WizardButtons
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          journeyStep={journeyStep}
-        />
-      ),
-    },
-    {
-      body: () => <Last handleSubmit={handleSubmit} />,
-      footer: () => (
-        <WizardButtons
-          handlePrevious={handlePrevious}
-          handleNext={handleNext}
-          journeyStep={journeyStep}
-          handleSubmit={handleSubmit}
-        />
-      ),
-    },
-  ];
-
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -114,13 +63,44 @@ const Page = () => {
     dispatch(updateField({field, value}));
   };
 
-  const handleAddItem = () => {
-    dispatch(addWorkHistoryItem(job));
+  const handleAddItem = (param: string) => {
+    let payloadData, typeData;
+    switch (param) {
+      case 'workHistory':
+        payloadData = job;
+        typeData = 'workHistory';
+        break;
+
+      case 'educationHistory':
+        payloadData = education;
+        typeData = 'educationHistory';
+        break;
+
+      default:
+        throw new Error(`Invalid param: ${param}`);
+    }
+
+    const payload = {
+      payloadData,
+      typeData,
+    };
+    dispatch(addItem(payload));
   };
 
-  const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJob((prevJob) => ({
-      ...prevJob,
+  const handleRemoveItem = (index: number, typeData: string) => {
+    const payload = {
+      index,
+      typeData,
+    };
+    dispatch(removeItem(payload));
+  };
+
+  const handleItemChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFunction: React.Dispatch<React.SetStateAction<Job | Education>>,
+  ) => {
+    setFunction((prevItem) => ({
+      ...prevItem,
       [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement)
         .value,
     }));
@@ -139,40 +119,93 @@ const Page = () => {
     }
   };
 
-  return (
-    <div className="mt-[48px] grid grid-cols-2">
-      <div className="mt-14 grid gap-3">
-        <ul className="steps">
-          <li className={`${journeyStep === 0 ? 'step-accent' : ''} step`}>
-            Basic
-          </li>
-          <li className={`${journeyStep === 1 ? 'step-accent' : ''} step`}>
-            About
-          </li>
-          <li className={`${journeyStep === 2 ? 'step-accent' : ''} step`}>
-            Work history
-          </li>
-          <li className={`${journeyStep === 3 ? 'step-accent' : ''} step`}>
-            Education
-          </li>
-        </ul>
+  const progressIndicatorData = [
+    'Personal details',
+    'About',
+    'Work history',
+    'Education',
+  ];
+  const wizardData = [
+    {
+      body: () => <PersonalDetails handleChange={handleChange} />,
+      footer: () => (
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
+      ),
+    },
+    {
+      body: () => <About handleChange={handleChange} />,
+      footer: () => (
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
+      ),
+    },
+    {
+      body: () => (
+        <WorkHistory
+          setJob={(e) => {
+            handleItemChange(e, setJob);
+          }}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+          data={formState}
+        />
+      ),
+      footer: () => (
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
+      ),
+    },
+    {
+      body: () => (
+        <EducationHistory
+          setJob={(e) => {
+            handleItemChange(e, setEducation);
+          }}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+          data={formState}
+        />
+      ),
+      footer: () => (
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+          handleSubmit={handleSubmit}
+        />
+      ),
+    },
+  ];
 
-        <div className="ml-32">
-          {' '}
+  return (
+    <div className="mt-[110px] grid grid-cols-2 ">
+      <div className="flex flex-col">
+        <ProgressIndicator
+          translations={progressIndicatorData}
+          journeyStep={journeyStep}
+        />
+        <div className="mx-8 mt-3">
           <Wizard
             body={wizardData[journeyStep].body}
             footer={wizardData[journeyStep].footer}
           />
         </div>
       </div>
-      <div className="mt-20">
+      <div className="mt-12 flex flex-col items-center">
         {data?.form?.map((el) => (
           <p key={el?.id}>
             <Link key={el?.id} href={`/form/${el?.id}`}>
-              {/* prettier-ignore */}
-              <button className="btn btn-outline btn-accent mb-2 w-full max-w-xs">
-                {el?.id}
-              </button>
+              <Button>{el?.id}</Button>
             </Link>
           </p>
         ))}

@@ -8,10 +8,11 @@ export type WorkHistoryItem = {
 export type FormState = {
   firstName: string;
   lastName: string;
-  age: string | null;
+  jobTitle: string | null;
   nationality: string;
-  sex: string | null;
+  city: string;
   about: string | null;
-  agree: boolean | null;
+  email: string;
+  phone: string;
   workHistory: WorkHistoryItem[];
 };

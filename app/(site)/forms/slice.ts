@@ -8,12 +8,14 @@ import {FormState} from '../../../types/form';
 const initialState: FormState = {
   firstName: '',
   lastName: '',
-  age: null,
+  jobTitle: '',
   nationality: '',
   about: '',
-  sex: null,
-  agree: null,
+  city: '',
+  email: '',
+  phone: '',
   workHistory: [],
+  educationHistory: [],
 };
 
 const formSlice = createSlice({
@@ -27,16 +29,15 @@ const formSlice = createSlice({
       state[action.payload.field] = action.payload.value;
       console.log(current(state));
     },
-    addWorkHistoryItem: (state, action: PayloadAction<WorkHistoryItem>) => {
-      state.workHistory.push(action.payload);
+    addItem: (state, action: PayloadAction<WorkHistoryItem>) => {
+      state[action.payload.typeData].push(action.payload.payloadData);
     },
-    removeWorkHistoryItem: (state, action: PayloadAction<number>) => {
-      state.workHistory.splice(action.payload, 1);
+    removeItem: (state, action: PayloadAction<number>) => {
+      state[action.payload.typeData].splice(action.payload.index, 1);
     },
   },
 });
 
-export const {updateField, addWorkHistoryItem, removeWorkHistoryItem} =
-  formSlice.actions;
+export const {updateField, addItem, removeItem} = formSlice.actions;
 
 export default formSlice.reducer;

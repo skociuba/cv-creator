@@ -29,16 +29,27 @@ model Form {
   firstName   String?
   lastName    String?
   about       String?
-  age         String?
+  jobTitle    String?
   nationality String?
-  sex         String?
-  agree       Boolean?
+  city         String?
+  email       String?
+  phone       String?
   userId      String            @db.ObjectId
   user        User              @relation(fields: [userId], references: [id])
   workHistory WorkHistoryItem[] 
+  educationHistory EducationHistoryItem[] 
 }
 
 model WorkHistoryItem {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  position  String?
+  employer  String?
+  startDate String?
+  endDate   String?  
+  formId    String    @db.ObjectId
+  form      Form      @relation(fields: [formId], references: [id])
+}
+model EducationHistoryItem {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
   position  String?
   employer  String?
