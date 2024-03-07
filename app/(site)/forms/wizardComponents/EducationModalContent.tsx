@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/input';
 
 type Props = {
-  setJob: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setEducation: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleAddItem: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void;
@@ -13,15 +13,25 @@ type Props = {
 
 const EducationModalContent: React.FC<Props> = ({
   setIsModalOpen,
-  setJob,
+  setEducation,
   handleAddItem,
 }) => (
   <div>
     <p className="pt-3">
-      <Input label="Position" onChange={setJob} name="position" type="text" />
+      <Input
+        label="Position"
+        onChange={setEducation}
+        name="position"
+        type="text"
+      />
     </p>
     <p className="pt-3">
-      <Input label="Employer" onChange={setJob} name="employer" type="text" />
+      <Input
+        label="Employer"
+        onChange={setEducation}
+        name="employer"
+        type="text"
+      />
     </p>
     <div className="grid grid-cols-2 py-3">
       <p
@@ -29,13 +39,18 @@ const EducationModalContent: React.FC<Props> = ({
         ">
         <Input
           label="Start date"
-          onChange={setJob}
+          onChange={setEducation}
           name="startDate"
           type="date"
         />
       </p>
       <p className="">
-        <Input label="End date" onChange={setJob} name="endDate" type="date" />
+        <Input
+          label="End date"
+          onChange={setEducation}
+          name="endDate"
+          type="date"
+        />
       </p>
     </div>
     <Button

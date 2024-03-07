@@ -14,16 +14,16 @@ type Data = {
   }[];
 };
 
-type WorkItemProps = {
-  setJob: (
+type Props = {
+  setEducation: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   handleAddItem: (item: string) => void;
   handleRemoveItem: (index: number, item: string) => void;
   data: Data;
 };
-const EducationHistory: React.FC<WorkItemProps> = ({
-  setJob,
+const EducationHistory: React.FC<Props> = ({
+  setEducation,
   handleAddItem,
   handleRemoveItem,
   data,
@@ -54,7 +54,7 @@ const EducationHistory: React.FC<WorkItemProps> = ({
       <ItemModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
         <EducationModalContent
           handleAddItem={() => handleAddItem('educationHistory')}
-          setJob={setJob}
+          setEducation={setEducation}
           setIsModalOpen={setIsModalOpen}
         />
       </ItemModal>

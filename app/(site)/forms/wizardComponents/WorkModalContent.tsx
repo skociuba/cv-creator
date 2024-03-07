@@ -11,7 +11,7 @@ type Props = {
   setIsModalOpen: (value: boolean) => void;
 };
 
-const EducationModalContent: React.FC<Props> = ({
+const WorkModalContent: React.FC<Props> = ({
   setIsModalOpen,
   setJob,
   handleAddItem,
@@ -49,4 +49,4 @@ const EducationModalContent: React.FC<Props> = ({
   </div>
 );
 
-export default EducationModalContent;
+export default WorkModalContent;

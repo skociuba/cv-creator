@@ -168,7 +168,7 @@ const Page = () => {
     {
       body: () => (
         <EducationHistory
-          setJob={(e) => {
+          setEducation={(e) => {
             handleItemChange(e, setEducation);
           }}
           handleAddItem={handleAddItem}

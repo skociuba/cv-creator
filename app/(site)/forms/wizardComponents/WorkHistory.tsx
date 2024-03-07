@@ -4,7 +4,7 @@ import Button from '#/./components/ui/Button';
 
 import ItemModal from '../../../components/ui/modal/ItemModal';
 
-import WorkModalContent from './EducationModalContent';
+import WorkModalContent from './WorkModalContent';
 type Data = {
   workHistory: {
     position: string;
@@ -14,7 +14,7 @@ type Data = {
   }[];
 };
 
-type WorkItemProps = {
+type Props = {
   setJob: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
@@ -23,7 +23,7 @@ type WorkItemProps = {
   data: Data;
 };
 
-const WorkHistory: React.FC<WorkItemProps> = ({
+const WorkHistory: React.FC<Props> = ({
   setJob,
   handleAddItem,
   handleRemoveItem,
