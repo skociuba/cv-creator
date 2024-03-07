@@ -16,10 +16,8 @@ type WorkItemProps = {
   setJob: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
-  handleAddItem: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => void;
-  handleRemoveItem: (index: number) => void;
+  handleAddItem: (item: string) => void;
+  handleRemoveItem: (index: number, item: string) => void;
   data: Data;
 };
 
@@ -47,11 +45,13 @@ const WorkHistory: React.FC<WorkItemProps> = ({
               {el?.startDate} - {el?.endDate}
             </p>
           </div>
-          <Button onClick={() => handleRemoveItem(index)}>remove</Button>
+          <Button onClick={() => handleRemoveItem(index, 'workHistory')}>
+            remove
+          </Button>
         </div>
       ))}
       <WorkItemModal
-        handleAddItem={handleAddItem}
+        handleAddItem={() => handleAddItem('workHistory')}
         setJob={setJob}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

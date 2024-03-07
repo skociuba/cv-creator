@@ -19,6 +19,7 @@ export const GET = async (req: NextRequest) => {
       where: {userId: cleanedUserId},
       include: {
         workHistory: true,
+        educationHistory: true,
       },
     });
 
@@ -40,9 +41,13 @@ export const POST = async (request: Request) => {
         workHistory: {
           create: formData.workHistory,
         },
+        educationHistory: {
+          create: formData.educationHistory,
+        },
       },
       include: {
         workHistory: true,
+        educationHistory: true,
       },
     });
 

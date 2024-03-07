@@ -23,7 +23,7 @@ import PersonalDetails from './wizardComponents/PersonalDetails';
 import About from './wizardComponents/About';
 import WorkHistory from './wizardComponents/WorkHistory';
 import EducationHistory from './wizardComponents/EducationHistory';
-import {updateField, addWorkHistoryItem, removeWorkHistoryItem} from './slice';
+import {updateField, addItem, removeItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
   const session = useSession();
@@ -33,12 +33,91 @@ const Page = () => {
   const {data, refetch} = useGetFormsQuery(JSON.stringify(userId));
   const [addForm] = useAddFormMutation();
   const [journeyStep, setJourneyStep] = useState(0);
-  const [job, setJob] = useState({
-    position: '',
-    employer: '',
-    startDate: '',
-    endDate: '',
-  });
+  const [job, setJob] = useState();
+  const [education, setEducation] = useState();
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (journeyStep < wizardData.length - 1) {
+      setJourneyStep(journeyStep + 1);
+    }
+  };
+
+  const handlePrevious = (e) => {
+    e.preventDefault();
+    if (journeyStep > 0) {
+      setJourneyStep(journeyStep - 1);
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const field = e.target.name as keyof FormState;
+    const value =
+      (e.target as HTMLInputElement | HTMLTextAreaElement).type === 'checkbox'
+        ? e.target.checked
+        : e.target.value;
+    dispatch(updateField({field, value}));
+  };
+
+  const handleAddItem = (param: string) => {
+    let payloadData, typeData;
+    switch (param) {
+      case 'workHistory':
+        payloadData = job;
+        typeData = 'workHistory';
+        break;
+
+      case 'educationHistory':
+        payloadData = education;
+        typeData = 'educationHistory';
+        break;
+
+      default:
+        throw new Error(`Invalid param: ${param}`);
+    }
+
+    const payload = {
+      payloadData,
+      typeData,
+    };
+    dispatch(addItem(payload));
+  };
+
+  const handleRemoveItem = (index: number, typeData: string) => {
+    const payload = {
+      index,
+      typeData,
+    };
+    dispatch(removeItem(payload));
+  };
+
+  const handleItemChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFunction: React.Dispatch<React.SetStateAction<Job | Education>>,
+  ) => {
+    setFunction((prevItem) => ({
+      ...prevItem,
+      [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement)
+        .value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await addForm({
+        ...formState,
+        userId: userId,
+      });
+      console.log(response.data);
+      refetch();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const progressIndicatorData = [
     'Personal details',
@@ -70,7 +149,9 @@ const Page = () => {
     {
       body: () => (
         <WorkHistory
-          setJob={handleItemChange}
+          setJob={(e) => {
+            handleItemChange(e, setJob);
+          }}
           handleAddItem={handleAddItem}
           handleRemoveItem={handleRemoveItem}
           data={formState}
@@ -85,7 +166,16 @@ const Page = () => {
       ),
     },
     {
-      body: () => <EducationHistory handleSubmit={handleSubmit} />,
+      body: () => (
+        <EducationHistory
+          setJob={(e) => {
+            handleItemChange(e, setEducation);
+          }}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+          data={formState}
+        />
+      ),
       footer: () => (
         <WizardButtons
           handlePrevious={handlePrevious}
@@ -96,62 +186,6 @@ const Page = () => {
       ),
     },
   ];
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (journeyStep < wizardData.length - 1) {
-      setJourneyStep(journeyStep + 1);
-    }
-  };
-
-  const handlePrevious = (e) => {
-    e.preventDefault();
-    if (journeyStep > 0) {
-      setJourneyStep(journeyStep - 1);
-    }
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    const field = e.target.name as keyof FormState;
-    const value =
-      (e.target as HTMLInputElement | HTMLTextAreaElement).type === 'checkbox'
-        ? e.target.checked
-        : e.target.value;
-    dispatch(updateField({field, value}));
-  };
-
-  const handleAddItem = () => {
-    dispatch(addWorkHistoryItem(job));
-  };
-
-  const handleRemoveItem = (index: number) => {
-    dispatch(removeWorkHistoryItem(index));
-  };
-
-  const handleItemChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJob((prevJob) => ({
-      ...prevJob,
-      [(e.target as HTMLInputElement).name]: (e.target as HTMLInputElement)
-        .value,
-    }));
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await addForm({
-        ...formState,
-        userId: userId,
-      });
-      console.log(response.data);
-      refetch();
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div className="mt-[110px] grid grid-cols-2 ">
