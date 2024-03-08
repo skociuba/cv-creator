@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 
 import Button from '#/./components/ui/Button';
+import Trash from '#/./../public/images/trash.svg';
 
 import ItemModal from '../../../components/ui/modal/ItemModal';
+import IconButton from '../../../components/IconButton';
 
 import WorkModalContent from './WorkModalContent';
+
 type Data = {
   workHistory: {
     position: string;
@@ -38,8 +41,8 @@ const WorkHistory: React.FC<Props> = ({
       {data?.workHistory?.map((el, index) => (
         <div
           key={el?.employer}
-          className="my-2 mb-2 grid grid-cols-2 rounded-lg border  border-accent p-3">
-          <div>
+          className="my-2 mb-2 grid grid-cols-12 rounded-lg border  border-accent p-3">
+          <div className="col-span-11">
             <p className="pb-2">
               {el?.position} - {el?.employer}
             </p>
@@ -47,9 +50,13 @@ const WorkHistory: React.FC<Props> = ({
               {el?.startDate} - {el?.endDate}
             </p>
           </div>
-          <Button onClick={() => handleRemoveItem(index, 'workHistory')}>
-            remove
-          </Button>
+          <div className="col-span-1 flex items-center justify-center">
+            {' '}
+            <IconButton
+              icon={Trash}
+              onClick={() => handleRemoveItem(index, 'workHistory')}
+            />
+          </div>
         </div>
       ))}
       <ItemModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>

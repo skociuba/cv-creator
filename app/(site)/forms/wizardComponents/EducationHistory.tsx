@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 
 import Button from '#/./components/ui/Button';
+import Trash from '#/./../public/images/trash.svg';
 
 import ItemModal from '../../../components/ui/modal/ItemModal';
+import IconButton from '../../../components/IconButton';
 
 import EducationModalContent from './EducationModalContent';
 type Data = {
@@ -37,8 +39,8 @@ const EducationHistory: React.FC<Props> = ({
       {data?.educationHistory?.map((el, index) => (
         <div
           key={el?.employer}
-          className="my-2 mb-2 grid grid-cols-2 rounded-lg border  border-accent p-3">
-          <div>
+          className="my-2 mb-2 grid grid-cols-12 rounded-lg border  border-accent p-3">
+          <div className="col-span-11">
             <p className="pb-2">
               {el?.position} - {el?.employer}
             </p>
@@ -46,9 +48,13 @@ const EducationHistory: React.FC<Props> = ({
               {el?.startDate} - {el?.endDate}
             </p>
           </div>
-          <Button onClick={() => handleRemoveItem(index, 'educationHistory')}>
-            remove
-          </Button>
+          <div className="col-span-1 flex items-center justify-center">
+            {' '}
+            <IconButton
+              icon={Trash}
+              onClick={() => handleRemoveItem(index, 'educationHistory')}
+            />
+          </div>
         </div>
       ))}
       <ItemModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
