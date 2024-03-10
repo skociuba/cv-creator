@@ -4,7 +4,7 @@ import Button from '#/./components/ui/Button';
 import Trash from '#/./../public/images/trash.svg';
 
 import ItemModal from '../../../components/ui/modal/ItemModal';
-import IconButton from '../../../components/IconButton';
+import IconButton from '../../../components/ui/IconButton';
 
 import EducationModalContent from './EducationModalContent';
 type Data = {
@@ -34,7 +34,7 @@ const EducationHistory: React.FC<Props> = ({
 
   return (
     <div className="grid-col grid">
-      <h1 className="my-2">Add work Positions</h1>
+      <h1 className="my-2">Add education history</h1>
       <Button onClick={() => setIsModalOpen(true)}>add</Button>
       {data?.educationHistory?.map((el, index) => (
         <div

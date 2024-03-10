@@ -22,7 +22,7 @@ const WizardButtons: React.FC<Props> = ({
       onClick={(e) => handlePrevious(e)}>
       back
     </button>
-    {journeyStep !== 3 ? (
+    {journeyStep !== 4 ? (
       <button
         className="btn btn-accent btn-outline mb-2 w-20"
         onClick={(e) => handleNext(e)}>

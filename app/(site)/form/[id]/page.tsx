@@ -76,15 +76,25 @@ const User = ({params}) => {
                   ))}
                 </p>
               </div>
-              <div className="col-span-1  bg-accent py-4 pl-6 text-left text-sm">
+              <div className="col-span-1  bg-accent px-6 py-4 text-left text-sm">
                 <ul>
                   <p className="py-3 font-bold">Details</p>
                   <li className="py-2"> {content?.nationality || `-`}</li>
                   <li className="py-2"> {content?.city || `-`}</li>
                   <li className="py-2"> {content?.phone || `-`}</li>
                   <li className="py-2 "> {content?.email || `-`}</li>
-                </ul>{' '}
-              </div>{' '}
+                </ul>
+                <ul>
+                  <p className="mt-5 border-t border-white  py-5 font-bold">
+                    Skills
+                  </p>
+                  {content?.skills?.map((el) => (
+                    <li key={el?.skill} className="py-2">
+                      {el?.skill}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

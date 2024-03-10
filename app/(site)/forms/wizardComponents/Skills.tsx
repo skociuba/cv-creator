@@ -6,19 +6,16 @@ import Trash from '#/./../public/images/trash.svg';
 import ItemModal from '../../../components/ui/modal/ItemModal';
 import IconButton from '../../../components/ui/IconButton';
 
-import WorkModalContent from './WorkModalContent';
+import SkillModalContent from './SkillModalContent';
 
 type Data = {
-  workHistory: {
-    position: string;
-    employer: string;
-    startDate: string;
-    endDate: string;
+  skills: {
+    skill: string;
   }[];
 };
 
 type Props = {
-  setJob: (
+  setSkill: (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => void;
   handleAddItem: (item: string) => void;
@@ -26,8 +23,8 @@ type Props = {
   data: Data;
 };
 
-const WorkHistory: React.FC<Props> = ({
-  setJob,
+const Skills: React.FC<Props> = ({
+  setSkill,
   handleAddItem,
   handleRemoveItem,
   data,
@@ -36,37 +33,31 @@ const WorkHistory: React.FC<Props> = ({
 
   return (
     <div className="grid-col grid">
-      <h1 className="my-2">Add work Positions</h1>
+      <h1 className="my-2">Add Your skills</h1>
       <Button onClick={() => setIsModalOpen(true)}>add</Button>
-      {data?.workHistory?.map((el, index) => (
+
+      {data?.skills?.map((el, index) => (
         <div
-          key={el?.employer}
-          className="my-2 mb-2 grid grid-cols-12 rounded-lg border  border-accent p-3">
-          <div className="col-span-11">
-            <p className="pb-2">
-              {el?.position} - {el?.employer}
-            </p>
-            <p>
-              {el?.startDate} - {el?.endDate}
-            </p>
-          </div>
+          key={el?.skill}
+          className="grid grid-cols-12 border-b  border-accent p-3">
+          <div className="col-span-11">{el?.skill}</div>
           <div className="col-span-1 flex items-center justify-center">
-            {' '}
             <IconButton
               icon={Trash}
-              onClick={() => handleRemoveItem(index, 'workHistory')}
+              onClick={() => handleRemoveItem(index, 'skills')}
             />
           </div>
         </div>
       ))}
+
       <ItemModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-        <WorkModalContent
-          handleAddItem={() => handleAddItem('workHistory')}
-          setJob={setJob}
+        <SkillModalContent
+          handleAddItem={() => handleAddItem('skills')}
+          setSkill={setSkill}
           setIsModalOpen={setIsModalOpen}
         />
       </ItemModal>
     </div>
   );
 };
-export default WorkHistory;
+export default Skills;
