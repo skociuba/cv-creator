@@ -64,9 +64,9 @@ const User = ({params}) => {
                 <p className="py-5">
                   <strong>Education history</strong>
                   {content?.educationHistory?.map((el) => (
-                    <div key={el?.employer} className="my-2 mb-2 py-3">
+                    <div key={el?.school} className="my-2 mb-2 py-3">
                       <p className="pb-2">
-                        {el?.position} - {el?.employer}
+                        {el?.school} - {el?.degree}
                       </p>
                       <p className="text-xs text-gray-500">
                         <span>{el?.startDate}</span>

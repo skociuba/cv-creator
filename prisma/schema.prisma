@@ -52,8 +52,8 @@ model WorkHistoryItem {
 }
 model EducationHistoryItem {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  position  String?
-  employer  String?
+  school  String?
+  degree  String?
   startDate String?
   endDate   String?  
   formId    String    @db.ObjectId

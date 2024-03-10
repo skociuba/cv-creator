@@ -18,20 +18,10 @@ const EducationModalContent: React.FC<Props> = ({
 }) => (
   <div>
     <p className="pt-3">
-      <Input
-        label="Position"
-        onChange={setEducation}
-        name="position"
-        type="text"
-      />
+      <Input label="School" onChange={setEducation} name="school" type="text" />
     </p>
     <p className="pt-3">
-      <Input
-        label="Employer"
-        onChange={setEducation}
-        name="employer"
-        type="text"
-      />
+      <Input label="Degree" onChange={setEducation} name="degree" type="text" />
     </p>
     <div className="grid grid-cols-2 py-3">
       <p
