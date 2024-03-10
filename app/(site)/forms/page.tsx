@@ -23,6 +23,7 @@ import PersonalDetails from './wizardComponents/PersonalDetails';
 import About from './wizardComponents/About';
 import WorkHistory from './wizardComponents/WorkHistory';
 import EducationHistory from './wizardComponents/EducationHistory';
+import Skills from './wizardComponents/Skills';
 import {updateField, addItem, removeItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Page = () => {
   const [journeyStep, setJourneyStep] = useState(0);
   const [job, setJob] = useState();
   const [education, setEducation] = useState();
+  const [skill, setSkill] = useState();
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -70,10 +72,13 @@ const Page = () => {
         payloadData = job;
         typeData = 'workHistory';
         break;
-
       case 'educationHistory':
         payloadData = education;
         typeData = 'educationHistory';
+        break;
+      case 'skills':
+        payloadData = skill;
+        typeData = 'skills';
         break;
 
       default:
@@ -124,6 +129,7 @@ const Page = () => {
     'About',
     'Work history',
     'Education',
+    'Skills',
   ];
   const wizardData = [
     {
@@ -168,8 +174,27 @@ const Page = () => {
     {
       body: () => (
         <EducationHistory
-          setJob={(e) => {
+          setEducation={(e) => {
             handleItemChange(e, setEducation);
+          }}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+          data={formState}
+        />
+      ),
+      footer: () => (
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
+      ),
+    },
+    {
+      body: () => (
+        <Skills
+          setSkill={(e) => {
+            handleItemChange(e, setSkill);
           }}
           handleAddItem={handleAddItem}
           handleRemoveItem={handleRemoveItem}

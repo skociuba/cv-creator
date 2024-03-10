@@ -18,7 +18,7 @@ const Nav = () => {
     <nav
       style={{
         backgroundColor: `${pathname === '/' ? `transparent` : `white`}`,
-        borderBottom: `${pathname === '/' ? `none` : `1px solid #3ffdfe`}`,
+        borderBottom: `${pathname === '/' ? `none` : `1px solid #00bfa5`}`,
         color: `${pathname === '/' ? `white` : `black`}`,
       }}
       className="fixed left-0 top-0 z-10 w-full">

@@ -16,6 +16,7 @@ const initialState: FormState = {
   phone: '',
   workHistory: [],
   educationHistory: [],
+  skills: [],
 };
 
 const formSlice = createSlice({

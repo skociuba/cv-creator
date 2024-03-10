@@ -20,6 +20,7 @@ export const GET = async (req: NextRequest) => {
       include: {
         workHistory: true,
         educationHistory: true,
+        skills: true,
       },
     });
 
@@ -44,10 +45,14 @@ export const POST = async (request: Request) => {
         educationHistory: {
           create: formData.educationHistory,
         },
+        skills: {
+          create: formData.skills,
+        },
       },
       include: {
         workHistory: true,
         educationHistory: true,
+        skills: true,
       },
     });
 

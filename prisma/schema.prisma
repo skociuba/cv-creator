@@ -38,6 +38,7 @@ model Form {
   user        User              @relation(fields: [userId], references: [id])
   workHistory WorkHistoryItem[] 
   educationHistory EducationHistoryItem[] 
+  skills SkillsItem[] 
 }
 
 model WorkHistoryItem {
@@ -51,10 +52,16 @@ model WorkHistoryItem {
 }
 model EducationHistoryItem {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  position  String?
-  employer  String?
+  school  String?
+  degree  String?
   startDate String?
   endDate   String?  
+  formId    String    @db.ObjectId
+  form      Form      @relation(fields: [formId], references: [id])
+}
+model SkillsItem {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  skill     String? 
   formId    String    @db.ObjectId
   form      Form      @relation(fields: [formId], references: [id])
 }
