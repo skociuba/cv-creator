@@ -17,6 +17,7 @@ const initialState: FormState = {
   workHistory: [],
   educationHistory: [],
   skills: [],
+  languages: [],
 };
 
 const formSlice = createSlice({

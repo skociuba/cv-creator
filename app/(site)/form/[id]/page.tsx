@@ -35,15 +35,12 @@ const User = ({params}) => {
             <div className="grid h-full grid-cols-3">
               <div className="col-span-2 pl-6 text-left">
                 <h1 className="py-4 text-3xl font-bold">
-                  {' '}
                   {content?.firstName || `-`} {content?.lastName || `-`}
                 </h1>
                 <p className=" mb-8 py-2"> {content?.jobTitle || `-`}</p>
-
                 <p className="py-2">
                   <strong>Profile</strong>{' '}
-                  <p className="mr-6 mt-5 flex flex-col flex-wrap text-justify">
-                    {' '}
+                  <p className="mb-5 mr-6 mt-5 flex flex-col flex-wrap text-justify">
                     {content?.about || `-`}
                   </p>
                 </p>
@@ -91,6 +88,19 @@ const User = ({params}) => {
                   {content?.skills?.map((el) => (
                     <li key={el?.skill} className="py-2">
                       {el?.skill}
+                    </li>
+                  ))}
+                </ul>
+                <ul>
+                  <p className="mt-5 border-t border-white  py-5 font-bold">
+                    Languages
+                  </p>
+                  {content?.languages?.map((el) => (
+                    <li key={el?.language} className="py-2">
+                      <p className="pb-2">{el?.language}</p>
+                      <p className="text-xs text-white">
+                        <span>{el?.level}</span>
+                      </p>
                     </li>
                   ))}
                 </ul>

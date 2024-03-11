@@ -24,6 +24,7 @@ import About from './wizardComponents/About';
 import WorkHistory from './wizardComponents/WorkHistory';
 import EducationHistory from './wizardComponents/EducationHistory';
 import Skills from './wizardComponents/Skills';
+import Languages from './wizardComponents/Languages';
 import {updateField, addItem, removeItem} from './slice';
 const Page = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Page = () => {
   const [job, setJob] = useState();
   const [education, setEducation] = useState();
   const [skill, setSkill] = useState();
+  const [language, setLanguage] = useState();
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -70,15 +72,19 @@ const Page = () => {
     switch (param) {
       case 'workHistory':
         payloadData = job;
-        typeData = 'workHistory';
+        typeData = param;
         break;
       case 'educationHistory':
         payloadData = education;
-        typeData = 'educationHistory';
+        typeData = param;
         break;
       case 'skills':
         payloadData = skill;
-        typeData = 'skills';
+        typeData = param;
+        break;
+      case 'languages':
+        payloadData = language;
+        typeData = param;
         break;
 
       default:
@@ -130,6 +136,7 @@ const Page = () => {
     'Work history',
     'Education',
     'Skills',
+    'Languages',
   ];
   const wizardData = [
     {
@@ -195,6 +202,25 @@ const Page = () => {
         <Skills
           setSkill={(e) => {
             handleItemChange(e, setSkill);
+          }}
+          handleAddItem={handleAddItem}
+          handleRemoveItem={handleRemoveItem}
+          data={formState}
+        />
+      ),
+      footer: () => (
+        <WizardButtons
+          handlePrevious={handlePrevious}
+          handleNext={handleNext}
+          journeyStep={journeyStep}
+        />
+      ),
+    },
+    {
+      body: () => (
+        <Languages
+          setLanguage={(e) => {
+            handleItemChange(e, setLanguage);
           }}
           handleAddItem={handleAddItem}
           handleRemoveItem={handleRemoveItem}

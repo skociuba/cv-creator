@@ -1,5 +1,6 @@
 import React from 'react';
 
+import countries from '../../../constants/countries.json';
 import Input from '../../../components/ui/input';
 type BasicProps = {
   handleChange: (
@@ -24,10 +25,9 @@ const Basic: React.FC<BasicProps> = ({handleChange}) => (
           defaultValue="defaultOptionValue"
           className="select select-accent mt-2  w-full max-w-xs">
           <option disabled={true} value="defaultOptionValue" />
-
-          <option>Polish</option>
-          <option>English</option>
-          <option>Ukrainian</option>
+          {countries.map((el) => (
+            <option key={el.name}>{el.name}</option>
+          ))}
         </select>
       </div>
 
