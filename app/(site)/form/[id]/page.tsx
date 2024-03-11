@@ -3,7 +3,7 @@
 
 'use client';
 import {useSession} from 'next-auth/react';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import Button from '#/./components/ui/Button';
 
@@ -15,6 +15,9 @@ const User = ({params}) => {
   const userId = session?.data?.user?.id;
   const {data, isLoading} = useGetFormsQuery(JSON.stringify(userId));
   const id = params?.id;
+
+  const [color, setColor] = useState('#00bfa5');
+
   const selectForm = (formId) =>
     data?.form?.find((form) => form?.id === formId);
 
@@ -24,7 +27,31 @@ const User = ({params}) => {
 
   return (
     <div className="mx-auto mt-32 rounded-md bg-white text-center">
-      <Button onClick={() => createPdf(pdfRef)}>Download PDF</Button>
+      <div className="flex items-center justify-between">
+        <div className="flex w-full justify-center">
+          <Button onClick={() => createPdf(pdfRef)}>Download PDF</Button>
+        </div>
+        <div className="mr-5 flex space-x-4">
+          <button
+            className="btn btn-circle bg-blue-500"
+            onClick={() => {
+              setColor('#2196f3');
+            }}
+          />
+          <button
+            className="btn btn-circle bg-amber-500"
+            onClick={() => {
+              setColor('#ffc107');
+            }}
+          />
+          <button
+            className="btn btn-circle bg-accent"
+            onClick={() => {
+              setColor('#00bfa5');
+            }}
+          />
+        </div>
+      </div>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
@@ -35,15 +62,12 @@ const User = ({params}) => {
             <div className="grid h-full grid-cols-3">
               <div className="col-span-2 pl-6 text-left">
                 <h1 className="py-4 text-3xl font-bold">
-                  {' '}
                   {content?.firstName || `-`} {content?.lastName || `-`}
                 </h1>
                 <p className=" mb-8 py-2"> {content?.jobTitle || `-`}</p>
-
                 <p className="py-2">
                   <strong>Profile</strong>{' '}
-                  <p className="mr-6 mt-5 flex flex-col flex-wrap text-justify">
-                    {' '}
+                  <p className="mb-5 mr-6 mt-5 flex flex-col flex-wrap text-justify">
                     {content?.about || `-`}
                   </p>
                 </p>
@@ -76,7 +100,11 @@ const User = ({params}) => {
                   ))}
                 </p>
               </div>
-              <div className="col-span-1  bg-accent px-6 py-4 text-left text-sm">
+              <div
+                style={{
+                  backgroundColor: `${color}`,
+                }}
+                className="col-span-1 px-6 py-4 text-left text-sm">
                 <ul>
                   <p className="py-3 font-bold">Details</p>
                   <li className="py-2"> {content?.nationality || `-`}</li>
@@ -91,6 +119,19 @@ const User = ({params}) => {
                   {content?.skills?.map((el) => (
                     <li key={el?.skill} className="py-2">
                       {el?.skill}
+                    </li>
+                  ))}
+                </ul>
+                <ul>
+                  <p className="mt-5 border-t border-white  py-5 font-bold">
+                    Languages
+                  </p>
+                  {content?.languages?.map((el) => (
+                    <li key={el?.language} className="py-2">
+                      <p className="pb-2">{el?.language}</p>
+                      <p className="text-xs text-white">
+                        <span>{el?.level}</span>
+                      </p>
                     </li>
                   ))}
                 </ul>

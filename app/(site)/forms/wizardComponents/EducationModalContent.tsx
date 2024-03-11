@@ -2,9 +2,11 @@ import React from 'react';
 
 import Button from '../../../components/ui/Button';
 import Input from '../../../components/ui/input';
-
+import degrees from '../../../constants/degrees.json';
 type Props = {
-  setEducation: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setEducation: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => void;
   handleAddItem: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void;
@@ -20,8 +22,18 @@ const EducationModalContent: React.FC<Props> = ({
     <p className="pt-3">
       <Input label="School" onChange={setEducation} name="school" type="text" />
     </p>
-    <p className="pt-3">
-      <Input label="Degree" onChange={setEducation} name="degree" type="text" />
+
+    <p className="py-3">
+      <select
+        onChange={setEducation}
+        name="degree"
+        defaultValue="defaultOptionValue"
+        className="select select-accent mt-2  w-full max-w-xs">
+        <option disabled={true} value="defaultOptionValue" />
+        {degrees.map((el) => (
+          <option key={el}>{el}</option>
+        ))}
+      </select>
     </p>
     <div className="grid grid-cols-2 py-3">
       <p
