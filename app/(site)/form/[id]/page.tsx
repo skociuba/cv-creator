@@ -3,7 +3,7 @@
 
 'use client';
 import {useSession} from 'next-auth/react';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 
 import Button from '#/./components/ui/Button';
 
@@ -15,6 +15,9 @@ const User = ({params}) => {
   const userId = session?.data?.user?.id;
   const {data, isLoading} = useGetFormsQuery(JSON.stringify(userId));
   const id = params?.id;
+
+  const [color, setColor] = useState('#00bfa5');
+
   const selectForm = (formId) =>
     data?.form?.find((form) => form?.id === formId);
 
@@ -24,7 +27,31 @@ const User = ({params}) => {
 
   return (
     <div className="mx-auto mt-32 rounded-md bg-white text-center">
-      <Button onClick={() => createPdf(pdfRef)}>Download PDF</Button>
+      <div className="flex items-center justify-between">
+        <div className="flex w-full justify-center">
+          <Button onClick={() => createPdf(pdfRef)}>Download PDF</Button>
+        </div>
+        <div className="mr-5 flex space-x-4">
+          <button
+            className="btn btn-circle bg-blue-500"
+            onClick={() => {
+              setColor('#2196f3');
+            }}
+          />
+          <button
+            className="btn btn-circle bg-amber-500"
+            onClick={() => {
+              setColor('#ffc107');
+            }}
+          />
+          <button
+            className="btn btn-circle bg-accent"
+            onClick={() => {
+              setColor('#00bfa5');
+            }}
+          />
+        </div>
+      </div>
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
@@ -73,7 +100,11 @@ const User = ({params}) => {
                   ))}
                 </p>
               </div>
-              <div className="col-span-1  bg-accent px-6 py-4 text-left text-sm">
+              <div
+                style={{
+                  backgroundColor: `${color}`,
+                }}
+                className="col-span-1 px-6 py-4 text-left text-sm">
                 <ul>
                   <p className="py-3 font-bold">Details</p>
                   <li className="py-2"> {content?.nationality || `-`}</li>
